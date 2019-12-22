@@ -1,5 +1,18 @@
 const mongoose = require("mongoose");
-
+/*
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ["Point"],
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+    index: "2dsphere"
+  }
+});
+*/
 const BootcampSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -32,7 +45,7 @@ const BootcampSchema = new mongoose.Schema({
       "Please add a valid email"
     ]
   },
-  adress: {
+  address: {
     type: String,
     required: [true, "Please add an address"]
   },
@@ -40,12 +53,11 @@ const BootcampSchema = new mongoose.Schema({
     //   GeoJSON point
     type: {
       type: String,
-      enum: ["Point"],
-      required: true
+      enum: ["Point"]
     },
     coordinates: {
       type: [Number],
-      required: true,
+
       index: "2dsphere"
     },
     formattedAddress: String,
