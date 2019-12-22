@@ -8,7 +8,7 @@ const connectDB = async () => {
       useFindAndModify: false,
       useUnifiedTopology: true
     });
-    console.log(`MongoBD Connect: ${conn.connection.host}`);
+    console.log(`MongoBD Connect: ${conn.connection.host}`.cyan.underline.bold);
   } catch (error) {
     throw Error(error);
   }
