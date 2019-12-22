@@ -10,6 +10,7 @@ exports.getBootcamps = async (req, res, next) => {
     const bootcamps = await Bootcamp.find();
     res.status(200).json({
       success: true,
+      count: bootcamps.length,
       data: bootcamps
     });
   } catch (error) {
@@ -57,14 +58,31 @@ exports.createBootcamp = async (req, res, next) => {
  * @route   GET /api/v1/bootcamps/:id
  * @access  Private
  */
-exports.updateBootcamp = (req, res, next) => {
-  res.status(201).json({ success: true, msg: "post updated" + req.params.id });
+exports.updateBootcamp = async (req, res, next) => {
+  try {
+    const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    if (!bootcamp) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({ success: true, data: bootcamp });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 };
 /**
  * @des     delete bootcamp
  * @route   DELETE /api/v1/bootcamps/:id
  * @access  Private
  */
-exports.deleteBootcamp = (req, res, next) => {
-  res.status(201).json({ success: true, msg: "post deleted" + req.params.id });
+exports.deleteBootcamp = async (req, res, next) => {
+  try {
+    const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+    if (!bootcamp) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({ success: true, data: {} });
+  } catch (error) {}
 };
